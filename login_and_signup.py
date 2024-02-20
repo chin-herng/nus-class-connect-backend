@@ -27,7 +27,7 @@ def check_password(password):
         return False
     return True
 
-INVALID_PASSWORD, INVALID_USERNAME = 1,2
+INVALID_PASSWORD, INVALID_USERNAME = '1','2'
 
 def signup(username, password):
     if check_username(username):
@@ -42,5 +42,5 @@ def signup(username, password):
 def login(username, password):
     user = db.users.find_one({"username": username, "password": password})
     if user:
-      return True
-    return False
+      return '1'
+    return '0'
