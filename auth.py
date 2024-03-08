@@ -3,6 +3,8 @@ import re
 from main import db
 
 INVALID_EMAIL, INVALID_PASSWORD = 'invalid email', 'invalid password'
+INVALID_EMAIL_OR_PASSWORD = 'invalid email or password'
+SUCCESS = 'successful'
 
 def is_valid_email(email):
     email_pattern = re.compile(r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
@@ -35,7 +37,7 @@ def signup(email, password):
       if check_password(password):
         user_data = {"email": email, "password": hash_password(password)}
         db.users.insert_one(user_data)
-        return 'successful'
+        return SUCCESS
       else:
         return INVALID_PASSWORD
     return INVALID_EMAIL
@@ -43,5 +45,5 @@ def signup(email, password):
 def login(email, password):
     user = db.users.find_one({"email": email, "password": hash_password(password)})
     if user:
-      return 'successful'
-    return 'invalid email or password'
+      return SUCCESS
+    return INVALID_EMAIL_OR_PASSWORD
