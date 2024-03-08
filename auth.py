@@ -1,3 +1,4 @@
+import hashlib
 import os
 import pymongo
 import re
@@ -35,10 +36,15 @@ def check_password(password):
         return False
     return True
 
+def hash_password(password):
+   password_bytes = password.encode('utf-8')
+   hash_object = hashlib.sha256(password_bytes)
+   return hash_object.hexdigest()
+
 def signup(email, password):
     if check_email_exists(email):
       if check_password(password):
-        user_data = {"email": email, "password": password}
+        user_data = {"email": email, "password": hash_password(password)}
         db.users.insert_one(user_data)
         return 'successful'
       else:
