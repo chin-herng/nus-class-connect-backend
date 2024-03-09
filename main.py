@@ -27,5 +27,4 @@ def login_flask():
     return login(email, password), 200
 
 if __name__ == "__main__":
-    app.run(debug=True)
-    app.run()
+    app.run(port=6969, debug=True)
