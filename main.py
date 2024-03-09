@@ -17,14 +17,14 @@ def signup_flask():
     request_data = request.get_json()
     email = request_data['email']
     password = request_data['password']
-    return signup(email, password), 200
+    return signup(email, password)
 
 @app.route("/login", methods=['POST'])
 def login_flask():
     request_data = request.get_json()
     email = request_data['email']
     password = request_data['password']
-    return login(email, password), 200
+    return login(email, password)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=6969, debug=True)
