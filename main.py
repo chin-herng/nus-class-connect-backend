@@ -3,6 +3,7 @@ import pymongo
 from auth import *
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 load_dotenv()
 HOST = os.getenv('HOST')
@@ -11,6 +12,7 @@ client = pymongo.MongoClient(HOST)
 db = client["LOGIN"]
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/signup", methods=['POST'])
 def signup_flask():
