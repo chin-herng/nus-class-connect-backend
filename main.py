@@ -15,6 +15,7 @@ app = Flask(__name__)
 @app.route("/signup", methods=['POST'])
 def signup_flask():
     request_data = request.get_json()
+    request.headers.add('Access-Control-Allow-Origin', '*')
     email = request_data['email']
     password = request_data['password']
     return signup(email, password)
@@ -22,6 +23,7 @@ def signup_flask():
 @app.route("/login", methods=['POST'])
 def login_flask():
     request_data = request.get_json()
+    request.headers.add('Access-Control-Allow-Origin', '*')
     email = request_data['email']
     password = request_data['password']
     return login(email, password)
