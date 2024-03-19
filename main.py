@@ -2,7 +2,7 @@ import os
 import pymongo
 from auth import *
 from dotenv import load_dotenv
-from flask import Flask, request
+from flask import Flask, request, jsonify
 
 load_dotenv()
 HOST = os.getenv('HOST')
@@ -15,18 +15,28 @@ app = Flask(__name__)
 @app.route("/signup", methods=['POST'])
 def signup_flask():
     request_data = request.get_json()
-    request.headers.add('Access-Control-Allow-Origin', '*')
     email = request_data['email']
     password = request_data['password']
-    return signup(email, password)
+    message, error_code = signup(email, password)
+    response = jsonify({
+        'message': message,
+        'error_code': error_code
+    })
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.route("/login", methods=['POST'])
 def login_flask():
     request_data = request.get_json()
-    request.headers.add('Access-Control-Allow-Origin', '*')
     email = request_data['email']
     password = request_data['password']
-    return login(email, password)
+    message, error_code = login(email, password)
+    response = jsonify({
+        'message': message,
+        'error_code': error_code
+    })
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=6969, debug=True)
